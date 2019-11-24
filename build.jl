@@ -58,6 +58,7 @@ for platform in platforms
             l_target = platform isa MacOS ? "darwin" : platform isa Windows ? "win32" : platform isa Linux ? "linux" : platform isa FreeBSD ? "freebsd" : error("Unknown target.")
             run(Cmd(`$npm_cmd install --ignore-scripts --production --no-package-lock --no-optional`, dir=artifact_dir))
             canvas_path = abspath(joinpath(artifact_dir, "node_modules", "canvas"))
+            println(readdir(joinpath(artifact_dir, "node_modules", ".bin")))
             run(Cmd(`$nodepregyp_cmd install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=joinpath(artifact_dir, "node_modules", ".bin")))
         else
             run(Cmd(`$npm_cmd uninstall vega-cli --save`, dir=artifact_dir))
