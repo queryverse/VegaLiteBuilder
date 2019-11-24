@@ -84,5 +84,5 @@ for platform in platforms
 
     download_hash = archive_artifact(product_hash, joinpath(build_path, archive_filename))
 
-    bind_artifact!(artifact_toml, "vegalite_app", product_hash, platform=platform, force=true, download_info=Tuple[("https://github.com/queryverse/VegaLiteBuilder/releases/download/v$(URIParser.escape(version))/$archive_filename", download_hash)])
+    bind_artifact!(artifact_toml, "vegalite_app", product_hash, platform=platform, force=true, download_info=Tuple[("https://github.com/queryverse/VegaLiteBuilder/releases/download/v$(URIParser.escape(string(version)))/$archive_filename", download_hash)])
 end
