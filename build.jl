@@ -1,6 +1,7 @@
 using Pkg.Artifacts
 using Pkg.BinaryPlatforms
 using JSON
+import URIParser
 
 package_dict = JSON.parsefile(joinpath(@__DIR__, "package.json"))
 pkgname = package_dict["name"]
@@ -79,7 +80,9 @@ for platform in platforms
         download("https://cdn.jsdelivr.net/npm/vega-embed@$vegaembed_version", joinpath(artifact_dir, "minified", "vega-embed.min.js"))
     end
 
-    download_hash = archive_artifact(product_hash, joinpath(build_path, "$pkgname-$version-$(triplet(platform)).tar.gz"))
+    archive_filename = "$pkgname-$version-$(triplet(platform)).tar.gz"
 
-    bind_artifact!(artifact_toml, "vegalite_app", product_hash, platform=platform, force=true, download_info=Tuple[("httpssomething", download_hash)])
+    download_hash = archive_artifact(product_hash, joinpath(build_path, archive_filename))
+
+    bind_artifact!(artifact_toml, "vegalite_app", product_hash, platform=platform, force=true, download_info=Tuple[("https://github.com/queryverse/VegaLiteBuilder/releases/download/v$(URIParser.escape(version))/$archive_filename", download_hash)])
 end
