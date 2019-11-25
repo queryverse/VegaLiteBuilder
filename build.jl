@@ -52,6 +52,8 @@ for platform in platforms
     product_hash = create_artifact() do artifact_dir
         cp(joinpath(@__DIR__, "package.json"), joinpath(artifact_dir, "package.json"))
         cp(joinpath(@__DIR__, "package-lock.json"), joinpath(artifact_dir, "package-lock.json"))
+        cp(joinpath(@__DIR__, "vg2svg.js"), joinpath(artifact_dir, "vg2svg.js"))
+        cp(joinpath(@__DIR__, "vl2vg.js"), joinpath(artifact_dir, "vl2vg.js"))
 
         if arch(platform)==:x86_64 && (platform isa Windows || platform isa MacOS || (platform isa Linux && libc(platform)==:glibc))
             l_arch = arch(platform)==:x86_64 ? "x64" : arch(platform)==:i686 ? "ia32" : arch(platform)==:armv7l ? "arm" : error("Unknown arch.")
