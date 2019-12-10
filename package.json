@@ -6,6 +6,6 @@
     "vega-lite": "4.0.0",
     "vega-cli": "5.9.0",
     "canvas": "2.6.0",
-    "vega-embed": "6.2.0"
+    "vega-embed": "6.2.1"
   }
 }
