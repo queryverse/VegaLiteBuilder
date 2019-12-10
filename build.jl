@@ -55,10 +55,12 @@ for platform in platforms
         cp(joinpath(@__DIR__, "vg2svg.js"), joinpath(artifact_dir, "vg2svg.js"))
         cp(joinpath(@__DIR__, "vl2vg.js"), joinpath(artifact_dir, "vl2vg.js"))
 
+        bin_links_flat = platform isa Windows ? "--no-bin-links" : ""
+
         if arch(platform)==:x86_64 && (platform isa Windows || platform isa MacOS || (platform isa Linux && libc(platform)==:glibc))
             l_arch = arch(platform)==:x86_64 ? "x64" : arch(platform)==:i686 ? "ia32" : arch(platform)==:armv7l ? "arm" : error("Unknown arch.")
             l_target = platform isa MacOS ? "darwin" : platform isa Windows ? "win32" : platform isa Linux ? "linux" : platform isa FreeBSD ? "freebsd" : error("Unknown target.")
-            run(Cmd(`$npm_cmd install --ignore-scripts --production --no-package-lock --no-optional`, dir=artifact_dir))
+            run(Cmd(`$npm_cmd install --ignore-scripts --production --no-package-lock --no-optional $bin_links_flat`, dir=artifact_dir))
             canvas_path = abspath(joinpath(artifact_dir, "node_modules", "canvas"))
             if Sys.iswindows()
                 run(Cmd(`node-pre-gyp.cmd install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=joinpath(artifact_dir, "node_modules", ".bin")))
@@ -68,7 +70,7 @@ for platform in platforms
         else
             run(Cmd(`$npm_cmd uninstall vega-cli --save`, dir=artifact_dir))
             run(Cmd(`$npm_cmd uninstall canvas --save`, dir=artifact_dir))
-            run(Cmd(`$npm_cmd install --ignore-scripts --production --no-package-lock --no-optional`, dir=artifact_dir))
+            run(Cmd(`$npm_cmd install --ignore-scripts --production --no-package-lock --no-optional $bin_links_flat`, dir=artifact_dir))
         end
         run(Cmd(`$npm_cmd prune --production`, dir=artifact_dir))
 
