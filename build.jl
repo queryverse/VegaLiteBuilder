@@ -65,7 +65,7 @@ for platform in platforms
             if Sys.iswindows()
                 run(Cmd(`node-pre-gyp.cmd install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=joinpath(artifact_dir, "node_modules", "node-pre-gyp", "bin")))
             else
-                run(Cmd(`node node-pre-gyp install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=joinpath(artifact_dir, "node_modules", ".bin")))
+                run(Cmd(`node node-pre-gyp install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=joinpath(artifact_dir, "node_modules", "node-pre-gyp", "bin")))
             end
         else
             run(Cmd(`$npm_cmd uninstall vega-cli --save`, dir=artifact_dir))
