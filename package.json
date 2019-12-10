@@ -1,6 +1,6 @@
 {
   "name": "vegaliteassets",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "dependencies": {
     "vega": "5.9.0",
     "vega-lite": "4.0.0",
