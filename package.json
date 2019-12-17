@@ -3,7 +3,7 @@
   "version": "2.0.4",
   "dependencies": {
     "vega": "5.9.0",
-    "vega-lite": "4.0.0",
+    "vega-lite": "4.0.2",
     "vega-cli": "5.9.0",
     "canvas": "2.6.0",
     "vega-embed": "6.2.1"
