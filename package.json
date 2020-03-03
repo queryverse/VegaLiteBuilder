@@ -3,9 +3,9 @@
   "version": "2.1.1",
   "dependencies": {
     "canvas": "2.6.1",
-    "vega": "5.9.1",
-    "vega-cli": "5.9.1",
-    "vega-embed": "6.2.2",
-    "vega-lite": "4.2.0"
+    "vega": "5.9.2",
+    "vega-cli": "5.9.2",
+    "vega-embed": "6.3.2",
+    "vega-lite": "4.5.1"
   }
 }
