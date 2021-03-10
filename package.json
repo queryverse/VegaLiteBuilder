@@ -2,7 +2,7 @@
   "name": "vegaliteassets",
   "version": "3.0.0",
   "dependencies": {
-    "canvas": "^.7.0",
+    "canvas": "2.7.0",
     "vega": "5.19.1",
     "vega-cli": "5.19.1",
     "vega-embed": "6.15.2",
