@@ -1,6 +1,6 @@
 {
   "name": "vegaliteassets",
-  "version": "2.5.1",
+  "version": "3.0.0",
   "dependencies": {
     "canvas": "^.7.0",
     "vega": "5.19.1",
