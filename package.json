@@ -2,10 +2,10 @@
   "name": "vegaliteassets",
   "version": "2.5.1",
   "dependencies": {
-    "canvas": "2.6.1",
-    "vega": "5.13.0",
-    "vega-cli": "5.13.0",
-    "vega-embed": "6.8.0",
-    "vega-lite": "4.13.0"
+    "canvas": "2.7.0",
+    "vega": "5.19.1",
+    "vega-cli": "5.19.1",
+    "vega-embed": "6.15.2",
+    "vega-lite": "4.17.0"
   }
 }
