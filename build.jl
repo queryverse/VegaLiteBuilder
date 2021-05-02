@@ -37,6 +37,7 @@ platforms = [
 
     # BSDs
     MacOS(:x86_64),
+    MacOS(:aarch64),
     FreeBSD(:x86_64),
 
     # Windows
@@ -59,8 +60,8 @@ for platform in platforms
 
         bin_links_flat = platform isa Windows ? "--no-bin-links" : ""
 
-        if arch(platform)==:x86_64 && (platform isa Windows || platform isa MacOS || (platform isa Linux && libc(platform)==:glibc))
-            l_arch = arch(platform)==:x86_64 ? "x64" : arch(platform)==:i686 ? "ia32" : arch(platform)==:armv7l ? "arm" : error("Unknown arch.")
+        if platform isa MacOS || (arch(platform)==:x86_64 && (platform isa Windows || (platform isa Linux && libc(platform)==:glibc)))
+            l_arch = platform isa MacOS ? "x64" : arch(platform)==:x86_64 ? "x64" : arch(platform)==:i686 ? "ia32" : arch(platform)==:armv7l ? "arm" : error("Unknown arch.")
             l_target = platform isa MacOS ? "darwin" : platform isa Windows ? "win32" : platform isa Linux ? "linux" : platform isa FreeBSD ? "freebsd" : error("Unknown target.")
             run(Cmd(`$npm_cmd install --scripts-prepend-node-path=true --ignore-scripts --production --no-package-lock --no-optional $bin_links_flat`, dir=artifact_dir))
             canvas_path = abspath(joinpath(artifact_dir, "node_modules", "canvas"))
