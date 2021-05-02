@@ -85,7 +85,7 @@ for platform in platforms
             for (root, dirs, files) in walkdir(artifact_dir) 
                 cd(root) do
                     for file in files
-                        run(`chmod u+x "$file"`)
+                        run(`chmod +x "$file"`)
                     end
                 end
             end
