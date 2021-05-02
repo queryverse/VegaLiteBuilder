@@ -37,7 +37,7 @@ platforms = [
 
     # BSDs
     MacOS(:x86_64),
-    MacOS(:aarch64),
+    # MacOS(:aarch64),
     FreeBSD(:x86_64),
 
     # Windows
