@@ -61,7 +61,7 @@ for platform in platforms
         if arch(platform)==:x86_64 && (platform isa Windows || platform isa MacOS || (platform isa Linux && libc(platform)==:glibc))
             l_arch = arch(platform)==:x86_64 ? "x64" : arch(platform)==:i686 ? "ia32" : arch(platform)==:armv7l ? "arm" : error("Unknown arch.")
             l_target = platform isa MacOS ? "darwin" : platform isa Windows ? "win32" : platform isa Linux ? "linux" : platform isa FreeBSD ? "freebsd" : error("Unknown target.")
-            run(Cmd(`$npm_cmd install --ignore-scripts --production --no-package-lock --no-optional $bin_links_flat`, dir=artifact_dir))
+            run(Cmd(`$npm_cmd install --scripts-prepend-node-path --ignore-scripts --production --no-package-lock --no-optional $bin_links_flat`, dir=artifact_dir))
             canvas_path = abspath(joinpath(artifact_dir, "node_modules", "canvas"))
             if Sys.iswindows()
                 run(Cmd(`node-pre-gyp.cmd install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=joinpath(artifact_dir, "node_modules", "node-pre-gyp", "bin")))
@@ -69,11 +69,11 @@ for platform in platforms
                 run(Cmd(`node node-pre-gyp install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=joinpath(artifact_dir, "node_modules", "node-pre-gyp", "bin")))
             end
         else
-            run(Cmd(`$npm_cmd uninstall vega-cli --save`, dir=artifact_dir))
-            run(Cmd(`$npm_cmd uninstall canvas --save`, dir=artifact_dir))
-            run(Cmd(`$npm_cmd install --ignore-scripts --production --no-package-lock --no-optional $bin_links_flat`, dir=artifact_dir))
+            run(Cmd(`$npm_cmd uninstall --scripts-prepend-node-path vega-cli --save`, dir=artifact_dir))
+            run(Cmd(`$npm_cmd uninstall canvas --scripts-prepend-node-path --save`, dir=artifact_dir))
+            run(Cmd(`$npm_cmd install --scripts-prepend-node-path --ignore-scripts --production --no-package-lock --no-optional $bin_links_flat`, dir=artifact_dir))
         end
-        run(Cmd(`$npm_cmd prune --production`, dir=artifact_dir))
+        run(Cmd(`$npm_cmd prune --production --scripts-prepend-node-path `, dir=artifact_dir))
 
         mkpath(joinpath(artifact_dir, "minified"))
         mkpath(joinpath(artifact_dir, "schemas"))
