@@ -80,6 +80,16 @@ for platform in platforms
         download("https://cdn.jsdelivr.net/npm/vega@$vega_version", joinpath(artifact_dir, "minified", "vega.min.js"))
         download("https://cdn.jsdelivr.net/npm/vega-lite@$vegalite_version", joinpath(artifact_dir, "minified", "vega-lite.min.js"))
         download("https://cdn.jsdelivr.net/npm/vega-embed@$vegaembed_version", joinpath(artifact_dir, "minified", "vega-embed.min.js"))
+
+        if platform isa Windows
+            for (root, dirs, files) in walkdir(artifact_dir) 
+                cd(root) do
+                    for file in files
+                        run(`chmod u+x "$file"`)
+                    end
+                end
+            end
+        end
     end
 
     archive_filename = "$pkgname-$version-$(triplet(platform)).tar.gz"
