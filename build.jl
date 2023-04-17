@@ -2,7 +2,7 @@ using Pkg.Artifacts
 using Pkg.BinaryPlatforms
 using JSON
 import URIParser
-import NodeJS
+import NodeJS_16_jll
 
 package_dict = JSON.parsefile(joinpath(@__DIR__, "package.json"))
 pkgname = package_dict["name"]
@@ -45,8 +45,8 @@ platforms = [
     Windows(:x86_64),
 ]
 
-nodejs_cmd = NodeJS.nodejs_cmd()
-npm_cmd = NodeJS.npm_cmd()
+nodejs_cmd = NodeJS_16_jll.node()
+npm_cmd = Sys.iswindows() ? `$(string(NodeJS_16_jll.npm, ".cmd"))` : `$nodejs_cmd $(NodeJS_16_jll.npm)`
 
 for platform in platforms
 
@@ -65,6 +65,7 @@ for platform in platforms
             l_target = platform isa MacOS ? "darwin" : platform isa Windows ? "win32" : platform isa Linux ? "linux" : platform isa FreeBSD ? "freebsd" : error("Unknown target.")
             run(Cmd(`$npm_cmd install --scripts-prepend-node-path=true --ignore-scripts --production --no-package-lock --no-optional $bin_links_flat`, dir=artifact_dir))
             canvas_path = abspath(joinpath(artifact_dir, "node_modules", "canvas"))
+            run(Cmd(`$npm_cmd install @mapbox/node-pre-gyp --save`))
             run(Cmd(`$nodejs_cmd node-pre-gyp install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=joinpath(artifact_dir, "node_modules", "node-pre-gyp", "bin")))
         else
             run(Cmd(`$npm_cmd uninstall vega-cli --scripts-prepend-node-path=true --save`, dir=artifact_dir))
