@@ -17,6 +17,8 @@ jobs:
           version: 1.6
       - name: Instantiate environment
         run: julia --project --color=yes -e 'using Pkg; Pkg.instantiate()'
+      - name: Install node-pre-gyp
+        run: npm install @mapbox/node-pre-gyp -g 
       - name: Run build
         run: julia --project --color=yes build.jl
       - name: Release
