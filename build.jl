@@ -50,6 +50,8 @@ npm_cmd = Sys.iswindows() ? `$(string(NodeJS_16_jll.npm, ".cmd"))` : `$nodejs_cm
 
 for platform in platforms
 
+    @info "Now doing" platform
+
     l_libc = platform isa Linux ? "glibc" : "unknown"
 
     product_hash = create_artifact() do artifact_dir
@@ -66,7 +68,7 @@ for platform in platforms
             canvas_path = abspath(joinpath(artifact_dir, "node_modules", "canvas"))
 
             run(Cmd(`$npm_cmd install --scripts-prepend-node-path=true --ignore-scripts --omit=dev --omit=optional --no-package-lock $bin_links_flat`, dir=artifact_dir))
-            run(Cmd(`$nodejs_cmd $(joinpath(artifact_dir, "node_module", ".bin", "node-pre-gyp")) install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=artifact_dir))
+            run(Cmd(`$nodejs_cmd $(joinpath(artifact_dir, "node_modules", "@mapbox", "node-pre-gyp", "bin", "node-pre-gyp")) install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=artifact_dir))
         else
             run(Cmd(`$npm_cmd uninstall vega-cli --scripts-prepend-node-path=true --save`, dir=artifact_dir))
             run(Cmd(`$npm_cmd uninstall canvas --scripts-prepend-node-path=true --save`, dir=artifact_dir))
