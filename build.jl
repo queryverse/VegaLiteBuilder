@@ -66,7 +66,6 @@ for platform in platforms
             canvas_path = abspath(joinpath(artifact_dir, "node_modules", "canvas"))
 
             run(Cmd(`$npm_cmd install --scripts-prepend-node-path=true --ignore-scripts --omit=dev --omit=optional --no-package-lock $bin_links_flat`, dir=artifact_dir))
-            run(Cmd(`$npm_cmd install @mapbox/node-pre-gyp`, dir=artifact_dir))            
             run(Cmd(`$nodejs_cmd $(joinpath(artifact_dir, "node_module", ".bin", "node-pre-gyp")) install -C $canvas_path --target_arch=$l_arch --target_platform=$l_target --target_libc=$l_libc`, dir=artifact_dir))
         else
             run(Cmd(`$npm_cmd uninstall vega-cli --scripts-prepend-node-path=true --save`, dir=artifact_dir))
