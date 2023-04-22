@@ -2,7 +2,7 @@ using Pkg.Artifacts
 using Pkg.BinaryPlatforms
 using JSON
 import URIParser
-import NodeJS_16_jll
+import NodeJS_18_jll
 
 package_dict = JSON.parsefile(joinpath(@__DIR__, "package.json"))
 pkgname = package_dict["name"]
@@ -45,8 +45,8 @@ platforms = [
     Windows(:x86_64),
 ]
 
-nodejs_cmd = NodeJS_16_jll.node()
-npm_cmd = Sys.iswindows() ? `$(string(NodeJS_16_jll.npm, ".cmd"))` : `$nodejs_cmd $(NodeJS_16_jll.npm)`
+nodejs_cmd = NodeJS_18_jll.node()
+npm_cmd = Sys.iswindows() ? `$(string(NodeJS_18_jll.npm, ".cmd"))` : `$nodejs_cmd $(NodeJS_18_jll.npm)`
 
 for platform in platforms
 
